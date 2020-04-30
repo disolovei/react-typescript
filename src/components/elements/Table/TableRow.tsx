@@ -2,7 +2,7 @@ import React from "react";
 import TableCell from "./TableCell";
 
 interface InterfaceTableRow {
-    data: Array<React.ReactNode>;
+    data: Array<{}>;
 }
 
 function TableRow({
@@ -12,7 +12,7 @@ function TableRow({
     return (
         <tr {...attrs}>
             {data.map((item: any, index: number) => (
-                <TableCell key={index}>{item}</TableCell>
+                <TableCell key={index} item={item} />
             ))}
         </tr>
     );

@@ -18,9 +18,3 @@ export type END_GAME = typeof END_GAME;
 
 export const DATA_READY = 'DATA_READY';
 export type DATA_READY = typeof DATA_READY;
-
-export const MARK_CELL = 'MARK_CELL';
-export type MARK_CELL = typeof MARK_CELL;
-
-export const UNMARK_CELL = 'UNMARK_CELL';
-export type UNMARK_CELL = typeof UNMARK_CELL;

@@ -1,5 +1,10 @@
-import { CHANGE_READY_STATE, DATA_READY } from "../actionTypes";
+import {
+    CHANGE_READY_STATE,
+    DATA_READY,
+    END_GAME
+} from "../actionTypes";
 import { Action } from "../actions";
+import calculateSummary from "../../core/calculateSummary";
 
 export type AppReadyState = "loading" | "generate" | "render";
 
@@ -8,10 +13,12 @@ export type Grid = [number[]];
 export interface InterfaceStore {
     level: number;
     dimension: number;
-    allowedLevels: string[];
+    readonly allowedLevels: string[];
     generatedGrid: Grid;
     fulfilledGrid: Grid;
-    readyState: AppReadyState;
+    readonly readyState: AppReadyState;
+    ySummary: number[];
+    xSummary: number[];
 }
 
 const initialState: InterfaceStore = {
@@ -21,6 +28,8 @@ const initialState: InterfaceStore = {
     generatedGrid: [[]],
     fulfilledGrid: [[]],
     readyState: "loading",
+    ySummary: [],
+    xSummary: [],
 };
 
 export default (state: InterfaceStore = initialState, action: Action) => {
@@ -30,13 +39,22 @@ export default (state: InterfaceStore = initialState, action: Action) => {
                 ...state,
                 readyState: action.payload,
             };
+        case END_GAME:
+            console.log("END GAME");
+            return {
+                ...initialState,
+            };
         case DATA_READY:
-            let newReadyState: AppReadyState = "render"; // WTF
+            const newReadyState = "render" as AppReadyState;
+            const { generatedGrid, fulfilledGrid } = action.payload;
+            const [ySummary, xSummary] = calculateSummary(generatedGrid);
             return {
                 ...state,
                 readyState: newReadyState,
-                fulfilledGrid: action.payload.fulfilledGrid,
-                generatedGrid: action.payload.generatedGrid,
+                fulfilledGrid,
+                generatedGrid,
+                ySummary,
+                xSummary,
             };
         default:
             return state;

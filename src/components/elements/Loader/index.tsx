@@ -30,7 +30,7 @@ function Loader({
         if ("loading" === readyState) {
             setTimeout(() => {
                 changeReadyState("generate");
-            }, 3000);
+            }, 1000);
         } else if ("generate" === readyState) {
             setTimeout(() => {
                 const [correctGrid, fulfilledGrid] = gridGenerator(dimension);
@@ -38,7 +38,7 @@ function Loader({
                     generatedGrid: correctGrid,
                     fulfilledGrid: fulfilledGrid,
                 } );
-            }, 3000);
+            }, 1000);
         }
     }, [readyState, dimension, changeReadyState, dataReady]);
 
